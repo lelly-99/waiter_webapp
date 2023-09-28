@@ -1,0 +1,20 @@
+   <div class="container">
+        <p>Hello,<span>{{username}}</span>please select your availability</p>
+        <form action="/waiter" method="POST">
+            <div class="form-row">
+                {{#each days}}
+                <div class="form-check form-check-inline">
+                    <input
+                        type="checkbox"
+                        class="form-check-input"
+                        name="days"
+                        value="{{this.day_of_the_week}}"
+                    />
+                    <label class="form-check-label">{{this.day_of_the_week}}</label>
+                </div>
+                {{/each}}
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>

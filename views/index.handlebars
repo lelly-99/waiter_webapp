@@ -1,15 +1,30 @@
-
-    <h1>Select Your Availability</h1>
-    <form action="/waiters/:username" method="POST">
-        <label for="monday">Monday</label>
-        <input type="checkbox" id="monday" name="days[]" value="Monday">
-        <!-- Repeat similar lines for other days of the week -->
-
-        
+{{!-- <div class="container">
+    <form action="/" method="POST">
+        <label for="name">Name:</label>
+        <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Enter your name"
+            required
+        />
         <button type="submit">Submit</button>
     </form>
+</div> --}}
 
-
+  <div class="container">
+        <form action="/post_login" method="POST">
+            <label for="name">Name:</label>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Enter your name"
+                required
+            />
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 
 
 

@@ -5,7 +5,7 @@ import flash from "connect-flash";
 import session from "express-session";
 import pgPromise from "pg-promise";
 import query from "./service/query.js";
-import waiter_availability from "./factory-function/waiter_availability.js";
+// import waiter_availability from "./factory-function/waiter_availability.js";
 
 //import routes
 import routes from "./routes/route.js";
@@ -27,9 +27,9 @@ const database = pgp(connectionString);
 const database_instance = query(database);
 
 //factory function
-const waiter_availability_instance = waiter_availability();
+// const waiter_availability_instance = waiter_availability();
 //route
-const route = routes(waiter_availability_instance, database_instance)
+const route = routes(database_instance)
 
 const app = express();
 app.use(
@@ -51,9 +51,12 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get('/waiters/:username', route.get_waiter)
-app.post('/waiters/:username', route.post_waiter)
-app.post('/days', route.get_days);
+app.get('/', route.get_login);
+app.post('/post_login', route.post_login);
+app.get('/waiter', route.get_waiter);
+app.get('/waiter:username', route.get_waiter_username);
+app.post('/waiter', route.post_waiter); 
+app.get('/days', route.get_days); 
 
 const PORT = process.env.PORT || 3007;
 app.listen(PORT, function () {

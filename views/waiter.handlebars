@@ -1,6 +1,8 @@
 <div class="container">
-    <p>Hello, <span>{{this.waiter_username}}</span> please select your availability</p>
-    <form action="/waiter/{{this.waiter_username}}" method="POST"> <!-- Updated form action -->
+    <p>You are logged in as <span>{{this.waiter_username}}</span>, please select your availability</p>
+      <p class="green">{{messages.success}}</p>
+      <p class="red">{{messages.error}}</p>
+    <form action="/waiter/{{this.waiter_username}}" method="POST"> 
         <div class="form-row">
             {{#each days}}
             <div class="form-check form-check-inline">
@@ -18,5 +20,13 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
+<script>
+  setTimeout(function () { document.querySelector('.red').innerHTML = ''; },
+  3000);
+
+   setTimeout(function () { document.querySelector('.green').innerHTML = ''; },
+  3000);
+</script> 
+
 
 

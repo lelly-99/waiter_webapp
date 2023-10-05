@@ -1,4 +1,21 @@
-
+/* CSS for colored icons */
+.icon {
+    margin-left: 10px;
+    font-weight: bold;
+  }
+  
+  .orange-icon {
+    color: orange;
+  }
+  
+  .yellow-icon {
+    color: yellow;
+  }
+  
+  .green-icon {
+    color: green;
+  }
+  
    
   
 

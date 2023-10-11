@@ -1,7 +1,7 @@
 <div class="container">
     <p>You are logged in as <span>{{this.waiter_username}}</span>, please select your availability</p>
-    <p class="green">{{messages.success}}</p>
-    <p class="red">{{messages.error}}</p>
+    <p style="color: green;" class="green">{{messages.success}}</p>
+    <p style="color: red;" class="red">{{messages.error}}</p>
     <form action="/waiter/{{this.waiter_username}}" method="POST">
         <div class="form-row">
             {{#each days}}

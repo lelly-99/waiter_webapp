@@ -11,6 +11,14 @@
 </head>
 <body>
 
+  <i class="fa fa-circle" style="font-size:20px;color:green"></i> Enough waiters - 3
+  <br>
+  <i class="fa fa-circle" style="font-size:20px;color:orange"></i> Not enough waiters - 2
+  <br>
+  <i class="fa fa-circle" style="font-size:20px;color:yellow"></i> Not enough waiters - 1
+  <br>
+  <i class="fa fa-circle" style="font-size:20px;color:red"></i> To many waiters - 4 and above
+
 <div class="container">
   <h1>Admin Schedule</h1>
   <p class="green">{{messages.clear}}</p>
@@ -36,6 +44,8 @@
 </form>
 
 <script>
+   setTimeout(function () { document.querySelector('.green').innerHTML = ''; },
+  3000);
 document.addEventListener('DOMContentLoaded', function() {
   const cells = document.querySelectorAll('.count');
   

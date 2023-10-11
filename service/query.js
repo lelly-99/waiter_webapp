@@ -14,19 +14,25 @@ const query = (db) => {
       "SELECT DISTINCT waiters.waiter_name, weekdays.day_of_the_week FROM schedule JOIN waiters ON schedule.waiter_name_id = waiters.waiter_id JOIN weekdays ON schedule.weekdays_id = weekdays.id"
     );
   };
-  
+   
   const insertSchedule = async (waiter_name, selectedDays) => {
     const waiterIdResults = await db.manyOrNone(
       "SELECT waiter_id FROM waiters WHERE waiter_name = $1",
       [waiter_name]
     );
-    const waiterIds = waiterIdResults.map((result) => result.waiter_id);
-    for (const day of selectedDays) {
+    const waiterIds = [];
+    for (let i = 0; i < waiterIdResults.length; i++) {
+      waiterIds.push(waiterIdResults[i].waiter_id);
+    }
+  
+    for (let i = 0; i < selectedDays.length; i++) {
+      const day = selectedDays[i];
       const weekdaysIdResult = await db.one(
         "SELECT id FROM weekdays WHERE day_of_the_week = $1",
         [day]
       );
-      for (const waiterId of waiterIds) {
+      for (let j = 0; j < waiterIds.length; j++) {
+        const waiterId = waiterIds[j];
         await db.none(
           "INSERT INTO schedule (weekdays_id, waiter_name_id) VALUES ($1, $2)",
           [weekdaysIdResult.id, waiterId]
@@ -34,24 +40,51 @@ const query = (db) => {
       }
     }
   };
-const deleteScheduleForUser = async (username) => {
-  const waiterIds = await db.manyOrNone(
-    "SELECT waiter_id FROM waiters WHERE waiter_name = $1",
-    [username]
-  );
-
-  if (waiterIds.length > 0) {
-    await db.none(
-      "DELETE FROM schedule WHERE waiter_name_id IN ($1:csv)",
-      [waiterIds.map((row) => row.waiter_id)]
-    );
-  }
-};
-
+  
   const deleteSchedule = async () => {
     await db.none('DELETE FROM schedule');
     await db.none('DELETE FROM waiters');
   };
+
+  const getCountForSelectedDays = async () => {
+    return await db.one( "SELECT day_of_the_week, COUNT(*) as daysCount FROM schedule JOIN weekdays ON schedule.weekdays_id = weekdays.id GROUP BY day_of_the_week")
+  }
+
+  const getSelectedDaysForWaiter = async (waiterName) => {
+    return await db.manyOrNone(
+        `
+        SELECT weekdays.day_of_the_week
+        FROM schedule
+        JOIN waiters ON schedule.waiter_name_id = waiters.waiter_id
+        JOIN weekdays ON schedule.weekdays_id = weekdays.id
+        WHERE waiters.waiter_name = $1
+        `,
+        [waiterName]
+    );
+};
+
+const deleteWiterSelectedDays = async (waiter_name) => {
+  const waiterIdResults = await db.manyOrNone(
+      "SELECT waiter_id FROM waiters WHERE waiter_name = $1",
+      [waiter_name]
+  );
+  for (let i = 0; i < waiterIdResults.length; i++) {
+      const waiterId = waiterIdResults[i].waiter_id;
+      await db.none("DELETE FROM schedule WHERE waiter_name_id = $1", [waiterId]);
+  }
+};
+const getWaiterScheduleWithCount = async () => {
+  return await db.manyOrNone(
+    `
+    SELECT waiters.waiter_name, weekdays.day_of_the_week,
+    COUNT(schedule.weekdays_id) as selectedDaysCount
+    FROM waiters
+    LEFT JOIN schedule ON waiters.waiter_id = schedule.waiter_name_id
+    JOIN weekdays ON schedule.weekdays_id = weekdays.id
+    GROUP BY waiters.waiter_name, weekdays.day_of_the_week
+    `
+  );
+};
 
   return {
     getDays,
@@ -59,16 +92,12 @@ const deleteScheduleForUser = async (username) => {
     getWaiterSchedule,
     insertSchedule,
     deleteSchedule,
-    deleteScheduleForUser,
+    getSelectedDaysForWaiter,
+    getCountForSelectedDays,
+    deleteWiterSelectedDays,
+    getWaiterScheduleWithCount,
   };
 };
 export default query;
 
-// SELECT COUNT(*) AS waiter_count
-// FROM schedule
-// WHERE weekdays_id = (SELECT id FROM weekdays WHERE day_of_the_week = 'Monday');
 
-// INSERT INTO schedule (waiter_name_id, weekdays_id)
-// SELECT w.waiter_id, d.id
-// FROM waiters w
-// JOIN weekdays d ON w.waiter_name = 'lefsifi' AND d.day_of_the_week = 'Friday';

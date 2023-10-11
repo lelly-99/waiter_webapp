@@ -1,64 +1,63 @@
-{{!-- 
-  <div class="container">
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Days</th>
-                <th>Slot 1</th>
-                <th>Slot 2</th>
-                <th>Slot 3</th>
-            </tr>
-        </thead>
-         <tbody>
-            {{#each schedule}}
-            <tr>
-                <td>{{day_of_the_week}}</td>
-                <td>{{this.waiter_name}}</td>
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
-</div> --}}
-    <div class="container">
-        <h1>Admin Schedule</h1>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Waiter Name</th>
-                    <th>Day</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{#each schedule}}
-                <tr>
-                    <td>{{ this.waiter_name }}</td>
-                    <td>{{ this.day_of_the_week }}</td>
-                </tr>
-                {{/each}}
-            </tbody>
-        </table>
-    </div>
- <form action="/reset" method="POST">
-    <button class="btn btn-primary" type="submit">Clear Schedule</button>
-  </form>
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    /* Define CSS styles for the highlighted cells */
+    .highlight {
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
 
+<div class="container">
+  <h1>Admin Schedule</h1>
+  <p class="green">{{messages.clear}}</p>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Waiter Name</th>
+        <th>Day</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each schedule}}
+      <tr>
+        <td>{{this.waiter_name}}</td>
+        <td class="count">{{this.day_of_the_week}} ({{this.selecteddayscount}})</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+<form action="/reset" method="POST">
+  <button class="btn btn-primary" type="submit">Clear Schedule</button>
+</form>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const cells = document.querySelectorAll('.count');
   
-
-
-    
-
-
-
-
-
-   
-
-
-
-
-
-
+  cells.forEach(cell => {
+    const text = cell.textContent;
+    const count = parseInt(text.match(/\d+/)); 
+    if (!isNaN(count)) {
+      if (count === 1) {
+        cell.style.backgroundColor = 'orange';
+      } else if (count === 2) {
+        cell.style.backgroundColor = 'yellow';
+      } else if (count === 3) {
+        cell.style.backgroundColor = 'green';
+      } else if (count > 3) {
+        cell.style.backgroundColor = 'red';
+      }
+    }
+  });
+});
+</script>
+</body>
+</html>
 
 
 

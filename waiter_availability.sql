@@ -28,6 +28,25 @@ INSERT INTO weekdays (day_of_the_week) VALUES
 -- Will be schedule, which will have foreign keys from both tables (name_id, weekdays_id)
 
 
+-- SELECT weekdays.day_of_the_week
+-- FROM weekdays
+-- INNER JOIN schedule ON weekdays.id = schedule.weekdays_id
+-- INNER JOIN waiters ON schedule.waiter_name_id = waiters.waiter_id
+-- WHERE waiters.waiter_name = 'lesego';
+
+
+-- SELECT
+--     schedule.schedule_id,
+--     weekdays.day_of_the_week,
+--     waiters.waiter_name
+-- FROM
+--     schedule
+-- INNER JOIN weekdays ON schedule.weekdays_id = weekdays.id
+-- INNER JOIN waiters ON schedule.waiter_name_id = waiters.waiter_id;
+
+
+
+
 
 
 

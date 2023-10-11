@@ -1,20 +1,24 @@
-/* CSS for colored icons */
-.icon {
-    margin-left: 10px;
-    font-weight: bold;
-  }
-  
-  .orange-icon {
-    color: orange;
-  }
-  
-  .yellow-icon {
-    color: yellow;
-  }
-  
-  .green-icon {
-    color: green;
-  }
+.orange {
+  background-color: orange;
+  color: white; /* You can adjust this as needed */
+}
+
+.yellow {
+  background-color: yellow;
+  color: black; /* You can adjust this as needed */
+}
+
+.green {
+  background-color: green;
+  color: white; /* You can adjust this as needed */
+}
+
+.red {
+  background-color: red;
+  color: white; /* You can adjust this as needed */
+}
+
+
   
    
   

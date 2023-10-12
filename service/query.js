@@ -46,12 +46,6 @@ const query = (db) => {
     await db.none("DELETE FROM waiters");
   };
 
-  const getCountForSelectedDays = async () => {
-    return await db.one(
-      "SELECT day_of_the_week, COUNT(*) as daysCount FROM schedule JOIN weekdays ON schedule.weekdays_id = weekdays.id GROUP BY day_of_the_week"
-    );
-  };
-
   const getSelectedDaysForWaiter = async (waiterName) => {
     return await db.manyOrNone(
       "SELECT weekdays.day_of_the_week FROM schedule JOIN waiters ON schedule.waiter_name_id = waiters.waiter_id JOIN weekdays ON schedule.weekdays_id = weekdays.id WHERE waiters.waiter_name = $1",
@@ -79,7 +73,6 @@ const query = (db) => {
     insertSchedule,
     deleteSchedule,
     getSelectedDaysForWaiter,
-    getCountForSelectedDays,
     deleteWiterSelectedDays,
   };
 };

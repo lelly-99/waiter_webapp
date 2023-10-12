@@ -11,27 +11,22 @@
   <i class="fa fa-circle" style="font-size:20px;color:green"></i> Enough waiters - 3
   <br>
   <i class="fa fa-circle" style="font-size:20px;color:red"></i> To many waiters - 4 and above
-
-<div class="container">
   <h3>Schedule</h3>
   <p class="greeni" style="color: green;">{{messages.clear}}</p>
   <table class="table">
-    <thead>
-      <tr>
-        <th>Waiter Name</th>
-        <th>Day</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each schedule}}
-      <tr>
-        <td>{{this.waiter_name}}</td>
-        <td class="count" style="background-color: {{lookup ../coloredCounts this.day_of_the_week}};">{{this.day_of_the_week}}</td>
-      </tr>
+<tbody>
+  {{#each scheduleData}}
+  <tr>
+    <td class="highlighted" style="background-color: {{#if this.length}}{{lookup ../coloredCounts @key}}{{/if}};">{{@key}}</td>
+    <td class="highlighted" style="background-color: {{#if this.length}}{{lookup ../coloredCounts @key}}{{/if}};">
+      {{#each this}}
+      {{this}}
       {{/each}}
-    </tbody>
-  </table>
-</div>
+    </td>
+  </tr>
+  {{/each}}
+</tbody>
+
 <form action="/reset" method="POST">
   <button class="btn btn-primary" type="submit">Clear Schedule</button>
 </form>

@@ -1,16 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <style>
-    /* Define CSS styles for the highlighted cells */
-    .highlight {
-      text-align: center;
-      font-weight: bold;
-    }
+ <style>
+    .orange { color: orange; }
+    .yellow { color: yellow; }
+    .green { color: green; }
+    .blue { color: red; }
   </style>
-</head>
-<body>
-
   <i class="fa fa-circle" style="font-size:20px;color:orange"></i> Not enough waiters - 1
   <br>
   <i class="fa fa-circle" style="font-size:20px;color:yellow"></i> Not enough waiters - 2
@@ -20,8 +13,8 @@
   <i class="fa fa-circle" style="font-size:20px;color:red"></i> To many waiters - 4 and above
 
 <div class="container">
-  <h1>Admin Schedule</h1>
-  <p class="green">{{messages.clear}}</p>
+  <h3>Schedule</h3>
+  <p class="greeni" style="color: green;">{{messages.clear}}</p>
   <table class="table">
     <thead>
       <tr>
@@ -33,7 +26,7 @@
       {{#each schedule}}
       <tr>
         <td>{{this.waiter_name}}</td>
-        <td class="count">{{this.day_of_the_week}} ({{this.selecteddayscount}})</td>
+        <td class="count" style="background-color: {{lookup ../coloredCounts this.day_of_the_week}};">{{this.day_of_the_week}}</td>
       </tr>
       {{/each}}
     </tbody>
@@ -42,32 +35,15 @@
 <form action="/reset" method="POST">
   <button class="btn btn-primary" type="submit">Clear Schedule</button>
 </form>
-
 <script>
-   setTimeout(function () { document.querySelector('.green').innerHTML = ''; },
+   setTimeout(function () { document.querySelector('.greeni').innerHTML = ''; },
   3000);
-document.addEventListener('DOMContentLoaded', function() {
-  const cells = document.querySelectorAll('.count');
-  
-  cells.forEach(cell => {
-    const text = cell.textContent;
-    const count = parseInt(text.match(/\d+/)); 
-    if (!isNaN(count)) {
-      if (count === 1) {
-        cell.style.backgroundColor = 'orange';
-      } else if (count === 2) {
-        cell.style.backgroundColor = 'yellow';
-      } else if (count === 3) {
-        cell.style.backgroundColor = 'green';
-      } else if (count > 3) {
-        cell.style.backgroundColor = 'red';
-      }
-    }
-  });
-});
 </script>
-</body>
-</html>
+ 
+
+
+
+
 
 
 

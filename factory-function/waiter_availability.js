@@ -1,5 +1,6 @@
 export default function waiter_availability() {
-
+  const dayCounts = {};
+  const coloredCounts = {};
 
   function checkedDays(waiterSelectedDays, daysofweek) {
     if (waiterSelectedDays !== undefined) {
@@ -18,22 +19,41 @@ export default function waiter_availability() {
     }
 }
 
-// function highlight(selectedDaysCount){
-//   let className;
-//   if (selectedDaysCount === 1) {
-//     className = 'orange';
-//   } else if (selectedDaysCount === 2) {
-//     className = 'yellow';
-//   } else if (selectedDaysCount === 3) {
-//     className = 'green';
-//   } else {
-//     className = 'red';
-//   }
-//   return className;
-// }
+function colorCount(count) {
+  if (count === 1) {
+    return 'orange';
+  } else if (count === 2) {
+    return 'yellow';
+  } else if (count === 3) {
+    return 'green';
+  } else {
+    return 'red'; 
+  }
+}
 
+function checkedDaysCount(waiters) {
+
+  for (let i = 0; i < waiters.length; i++) {
+    const day = waiters[i].day_of_the_week;
+    if (dayCounts[day]) {
+      dayCounts[day] += 1;
+    } else {
+      dayCounts[day] = 1;
+    }
+  }
+
+  const keys = Object.keys(dayCounts);
+  for (let i = 0; i < keys.length; i++) {
+    const day = keys[i];
+    const count = dayCounts[day];
+    coloredCounts[day] = colorCount(count);
+  }
+
+  return coloredCounts;
+}
   return {
     checkedDays,
-    // highlight
+    checkedDaysCount,
+    colorCount,
   }
 }

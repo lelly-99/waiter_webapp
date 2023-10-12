@@ -59,13 +59,15 @@ export default function routes(database_instance, waiter_instance) {
 
     async function get_days(req, res) {
       try {
-        const schedule = await database_instance.getWaiterScheduleWithCount();
-        console.log(schedule)
-        res.render("days", { schedule});
+        const days = await database_instance.getDays();
+        const waiters = await database_instance.getWaiterSchedule();
+        const coloredCounts = waiter_instance.checkedDaysCount(waiters, days);
+        res.render("days", { schedule: waiters, coloredCounts });
       } catch (err) {
         console.log("Error", err);
       }
     }
+    
   
   async function reset_schedule(req, res) {
     try {

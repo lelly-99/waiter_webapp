@@ -27,7 +27,7 @@ export default function routes(database_instance, waiter_instance) {
       const username = req.params.username;
       await database_instance.insertUser(username);
       const selectedDays = await database_instance.getSelectedDaysForWaiter(
-        username
+        username 
       );
       waiter_instance.checkedDays(selectedDays, days);
       res.render("waiter", { days, waiter_username: username });
@@ -43,6 +43,7 @@ export default function routes(database_instance, waiter_instance) {
       if (selectedDays !== undefined) {
         if (selectedDays.length >= 3 && typeof selectedDays !== "string") {
           await database_instance.deleteWiterSelectedDays(username);
+          console.log(await database_instance.deleteWiterSelectedDays(username), "delete")
           await database_instance.insertSchedule(username, selectedDays);
           req.flash("success", "You have successfully added your availability");
         } else {

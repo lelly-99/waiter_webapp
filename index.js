@@ -7,7 +7,7 @@ import pgPromise from "pg-promise";
 import query from "./service/query.js";
 import routes from "./routes/route.js";
 import waiter_availability from "./factory-function/waiter_availability.js";
-// import Handlebars from 'handlebars';
+
 
 
 const pgp = pgPromise();

@@ -21,6 +21,7 @@ function checkedDays(waiterSelectedDays, daysofweek) {
   return daysofweek;
 }
 
+
 function colorCount(count) {
   if (count === 1) {
     return 'orange';
@@ -28,29 +29,30 @@ function colorCount(count) {
     return 'yellow';
   } else if (count === 3) {
     return 'green';
-  } else if(count >= 4){
-    return 'red'; 
+  } else if (count >= 4) {
+    return 'red';
   }
 }
 
-function checkedDaysCount(waiters) {
+function checkedDaysCount(data) {
+  const dayCounts = {};
 
-  for (let i = 0; i < waiters.length; i++) {
-    const day = waiters[i].day_of_the_week;
-    if (dayCounts[day]) {
-      dayCounts[day]++;
+  data.forEach(item => {
+    const day = item.day_of_the_week;
+    if (!dayCounts[day]) {
+      dayCounts[day] = [item.waiter_name];
     } else {
-      dayCounts[day] = 1;
+      dayCounts[day].push(item.waiter_name);
     }
+  });
+
+  const dayColors = {};
+
+  for (const day in dayCounts) {
+    dayColors[day] = colorCount(dayCounts[day].length);
   }
 
-  const keys = Object.keys(dayCounts);
-  for (let i = 0; i < keys.length; i++) {
-    const day = keys[i];
-    const count = dayCounts[day];
-    coloredCounts[day] = colorCount(count);
-  }
-  return coloredCounts;
+  return dayColors;
 }
 
 function dataInSchedule(days, waiters) {
@@ -61,7 +63,15 @@ function dataInSchedule(days, waiters) {
 
   for (let i = 0; i < waiters.length; i++) {
     const waiter = waiters[i];
-    schedule[waiter.day_of_the_week].push(waiter.waiter_name);
+    if (schedule[waiter.day_of_the_week]) {
+      schedule[waiter.day_of_the_week].push(waiter.waiter_name);
+    }
+  }
+  for (let i = 0; i < days.length; i++) {
+    const day = days[i];
+    if (!schedule[day.day_of_the_week]) {
+      schedule[day.day_of_the_week] = [];
+    }
   }
   return schedule;
 }

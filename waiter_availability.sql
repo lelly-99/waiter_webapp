@@ -4,7 +4,7 @@ CREATE TABLE weekdays (
 );
 
 CREATE TABLE waiters (
-    waiter_id SERIAL PRIMARY KEY,
+    waiter_id SERIAL PRIMARY KEY, 
     waiter_name VARCHAR(50) NOT NULL
 );
 

@@ -21,7 +21,6 @@ function checkedDays(waiterSelectedDays, daysofweek) {
   return daysofweek;
 }
 
-
 function colorCount(count) {
   if (count === 1) {
     return 'orange';

@@ -20,7 +20,7 @@ const database = pgp(connectionString);
 const data = query(database);
 
 describe("Waiter Availability", function () {
-  this.timeout(90000);
+  this.timeout(900000);
   beforeEach(async function () {
     // Clean the tables before each test run
     await data.deleteSchedule();

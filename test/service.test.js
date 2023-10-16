@@ -62,10 +62,11 @@ describe("Waiter Availability", function () {
       await data.insertSchedule(waiterName, selectedDays);
       var userSchedule = await data.getWaiterSchedule();
       assert.deepEqual(userSchedule, [
-        { waiter_name: "lelly", day_of_the_week: "Monday" },
-        { waiter_name: "lelly", day_of_the_week: "Tuesday" },
-        { waiter_name: "lelly", day_of_the_week: "Wednesday" },
-      ]);
+        { waiter_name: 'lelly', day_of_the_week: 'Monday' },
+        { waiter_name: 'lelly', day_of_the_week: 'Wednesday' },
+        { waiter_name: 'lelly', day_of_the_week: 'Tuesday' }
+      ]
+      );
     });
 
     it("should be able to reset schedule", async function () {

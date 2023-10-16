@@ -67,8 +67,6 @@ const query = (db) => {
     }
   };
 
-  // const deleteWiater = async (wai)
-
   return {
     getDays,
     insertUser,

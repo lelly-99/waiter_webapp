@@ -1,6 +1,6 @@
 export default function waiter_availability() {
   const dayCounts = {};
-  const coloredCounts = {};
+  const dayColors = {};
   const schedule = {};
 
 function checkedDays(waiterSelectedDays, daysofweek) {
@@ -35,8 +35,6 @@ function colorCount(count) {
 }
 
 function checkedDaysCount(data) {
-  const dayCounts = {};
-
   data.forEach(item => {
     const day = item.day_of_the_week;
     if (!dayCounts[day]) {
@@ -45,8 +43,6 @@ function checkedDaysCount(data) {
       dayCounts[day].push(item.waiter_name);
     }
   });
-
-  const dayColors = {};
 
   for (const day in dayCounts) {
     dayColors[day] = colorCount(dayCounts[day].length);

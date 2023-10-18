@@ -1,4 +1,4 @@
-<p>For waiter: enter your name from the textbox and submit or go to the url and add /waiter/"your name"</p>
+<!-- <p>For waiter: enter your name from the textbox and submit or go to the url and add /waiter/"your name"</p>
 <p>For admin: enter 'admin' from the textbox and submit or go to the url and add /days</p>
   <div class="container">
         <form action="/post_login" method="POST">
@@ -12,6 +12,50 @@
             />
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-    </div>
+    </div> -->
+
+<style>
+  p, h3 { 
+    text-align: center;
+   } 
+  button { width: 300px; }
+  input {
+    border-radius: 2px;
+  width: 300px;
+  height: 40px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+</style>
+<div class="container">
+  <form action="/post_login" method="POST">
+ <h3>Login</h3>
+    <hr>
+   <label for="email"><b>Username</b></label>
+   <br>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      placeholder="Enter your name"
+    />
+    <br />
+    <br />
+      <label for="email"><b>Password</b></label>
+      <br>
+    <input
+      type="text"
+      id="password"
+      name="password"
+      placeholder="Enter password"
+    />
+    <br>
+    <br>
+    <button type="submit" class="btn btn-primary">Login</button>
+      <div class="container signin">
+    <p>Don't have an account? <a href="/">Sign Up</a>.</p>
+  </div>
+  </form>
 
 

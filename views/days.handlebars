@@ -1,20 +1,31 @@
 <style>
-    .orange { color: orange; }
-    .yellow { color: yellow; }
-    .green { color: green; }
-    .blue { color: red; }
+     @media (max-width: 69em){
+         .fa {
+        display: block;
+       }
+     }
+    
     i {
-      padding: 10px;
+          font-family: Arial, sans-serif;
+    }
+    
+    table {
+        align-items: center;
     }
 </style>
-<i class="fa fa-circle" style="font-size:20px;color:orange"></i> Not enough waiters - 1
-<i class="fa fa-circle" style="font-size:20px;color:yellow"></i> Not enough waiters - 2
-<i class="fa fa-circle" style="font-size:20px;color:green"></i> Enough waiters - 3
-<i class="fa fa-circle" style="font-size:20px;color:red"></i> Too many waiters - 4 and above
-<h3>Schedule</h3>
+<p>Waiter capacity</p>
+<i class="fa fa-circle" style="font-size:20px;color:orange"> Not enough waiters(1)</i> 
+<i class="fa fa-circle" style="font-size:20px;color:yellow"> Not enough waiters(2)</i> 
+<i class="fa fa-circle" style="font-size:20px;color:green"> Enough waiters(3)</i> 
+<i class="fa fa-circle" style="font-size:20px;color:red"> Too many waiters(4 and above)</i> 
 <p class="greeni" style="color: green;">{{messages.clear}}</p>
+<form action="remove" method="post">
 <table class="table">
     <tbody>
+        <tr>
+            <th >Days</th>
+            <th >Waiter Names</th>
+        </tr>
         {{#each scheduleData}}
         <tr>
             <td style="background-color: {{#if this}}{{lookup ../coloredCounts @key}}{{/if}}; color: black">{{@key}}</td>
@@ -27,10 +38,10 @@
         {{/each}}
     </tbody>
 </table>
+</form>
 <form action="/reset" method="POST">
     <button class="btn btn-primary" type="submit">Clear Schedule</button>
 </form>
-
 <script>
    setTimeout(function () { document.querySelector('.greeni').innerHTML = ''; },
   3000);

@@ -1,17 +1,58 @@
-<p>For waiter: enter your name from the textbox and submit or go to the url and add /waiter/"your name"</p>
-<p>For admin: enter 'admin' from the textbox and submit or go to the url and add /days</p>
-  <div class="container">
-        <form action="/post_login" method="POST">
-            <label for="name">Name:</label>
-            <input
-                type="text"
-                id="name"
-                name="name"
-                placeholder="Enter your name"
-                required
-            />
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+<style>
+  p, h3 { 
+    text-align: center;
+   } 
+  button { width: 300px; }
+  input {
+    border-radius: 2px;
+  width: 300px;
+  height: 40px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+  color: black;
+}
+
+  @media (max-width: 69em){
+      input {
+        width: 250px;
+        height: 35px;
+      }
+      button {
+        width: 250px;
+      }
+     }
+
+
+
+</style>
+<div class="container">
+  <form action="/sign_in" method="POST"> 
+    <h3>Register</h3>
+    <p style="color: green;" class="greens">{{messages.success}}</p>
+    <p style="color: red;" class="reds">{{messages.error}}</p>
+    <hr>
+<label for="name"><b>Username</b></label><br>
+  <input type="text" id="name" name="name" placeholder="Enter your name"><br><br>
+  <label for="password"><b>Password</b></label><br>
+  <input type="password" id="password" name="password" placeholder="Enter password"><br><br>
+  <label for="password_repeat"><b>Repeat password</b></label><br>
+  <input type="password" id="password_repeat" name="password_repeat" placeholder="Re-enter password"><br><br>
+    <button type="submit" class="btn btn-primary">Sign Up</button>
+    <div class="container signin">
+      <p>Already have an account? <a href="/login">Login</a>.</p>
     </div>
+  </form>
+</div>
+  <script>
+  setTimeout(function () { document.querySelector('.reds').innerHTML = ''; },
+  3000);
+   setTimeout(function () { document.querySelector('.greens').innerHTML = ''; },
+  3000);
+</script> 
+
+
+
+
 
 

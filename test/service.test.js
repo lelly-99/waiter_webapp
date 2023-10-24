@@ -47,8 +47,8 @@ describe("Waiter Availability", function () {
       await data.insertSchedule(waiterName, selectedDays);
       var userSchedule = await data.getWaiterSchedule();
       assert.deepEqual(userSchedule, [
-        { waiter_name: 'Lelly', day_of_the_week: 'Tuesday' },
         { waiter_name: 'Lelly', day_of_the_week: 'Wednesday' },
+        { waiter_name: 'Lelly', day_of_the_week: 'Tuesday' },
         { waiter_name: 'Lelly', day_of_the_week: 'Monday' }
       ]
       );

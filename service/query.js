@@ -1,13 +1,15 @@
+
 const query = (db) => {
   const getDays = async () => {
     return await db.manyOrNone("SELECT day_of_the_week FROM weekdays");
   };
 
-  const insertUser = async (waiter_name) => {
-    return await db.none("INSERT INTO waiters (waiter_name) VALUES ($1)", [
-      waiter_name,
-    ]);
-  };
+  async function insertUser(waiter_name, waiter_password) {
+    return await db.none(
+      "INSERT INTO waiters (waiter_name, waiter_password) VALUES ($1, $2)",
+      [waiter_name, waiter_password]
+    );
+  }
 
   const getWaiterSchedule = async () => {
     return await db.manyOrNone(
@@ -43,12 +45,11 @@ const query = (db) => {
 
   const deleteSchedule = async () => {
     await db.none("DELETE FROM schedule");
-    await db.none("DELETE FROM waiters");
   };
 
   const getSelectedDaysForWaiter = async (waiterName) => {
     return await db.manyOrNone(
-      "SELECT weekdays.day_of_the_week FROM schedule JOIN waiters ON schedule.waiter_name_id = waiters.waiter_id JOIN weekdays ON schedule.weekdays_id = weekdays.id WHERE waiters.waiter_name = $1",
+      "SELECT DISTINCT weekdays.day_of_the_week FROM schedule JOIN waiters ON schedule.waiter_name_id = waiters.waiter_id JOIN weekdays ON schedule.weekdays_id = weekdays.id WHERE waiters.waiter_name = $1",
       [waiterName]
     );
   };
@@ -58,7 +59,6 @@ const query = (db) => {
       "SELECT DISTINCT waiter_id FROM waiters WHERE waiter_name = $1",
       [waiter_name]
     );
-    console.log(waiterIdResults, 'waiter results')
     for (let i = 0; i < waiterIdResults.length; i++) {
       const waiterId = waiterIdResults[i].waiter_id;
       await db.none("DELETE FROM schedule WHERE waiter_name_id = $1", [
@@ -66,6 +66,14 @@ const query = (db) => {
       ]);
     }
   };
+
+  const getUser = async (waiter_name) => {
+    return await db.oneOrNone(
+      "SELECT * FROM waiters WHERE waiter_name = $1",
+      [waiter_name]
+    );
+  };
+  
 
   return {
     getDays,
@@ -75,6 +83,8 @@ const query = (db) => {
     deleteSchedule,
     getSelectedDaysForWaiter,
     deleteWiterSelectedDays,
+    getUser,
   };
 };
 export default query;
+

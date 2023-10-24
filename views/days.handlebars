@@ -1,40 +1,107 @@
+
 <style>
-    .orange { color: orange; }
-    .yellow { color: yellow; }
-    .green { color: green; }
-    .blue { color: red; }
-    i {
-      padding: 10px;
+    @media (max-width: 69em) {
+        .fa {
+            display: block;
+        }
+
+        i {
+            font-family: Arial, sans-serif;
+        }
+
+        .table {
+            align-items: center;
+        }
     }
+
+    .check {
+       border: 2px solid grey;
+    }
+     button { width: 150px; }
+  input {
+    border-radius: 2px;
+  width: 150px;
+  height: 40px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+input {
+  color: black;
+}
 </style>
-<i class="fa fa-circle" style="font-size:20px;color:orange"></i> Not enough waiters - 1
-<i class="fa fa-circle" style="font-size:20px;color:yellow"></i> Not enough waiters - 2
-<i class="fa fa-circle" style="font-size:20px;color:green"></i> Enough waiters - 3
-<i class="fa fa-circle" style="font-size:20px;color:red"></i> Too many waiters - 4 and above
-<h3>Schedule</h3>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+<p style="text-align: center;">Waiter capacity</p>
+<i class="fa fa-circle" style="font-size:20px;color:orange"> Not enough waiters(1)</i>
+<i class="fa fa-circle" style="font-size:20px;color:yellow"> Not enough waiters(2)</i>
+<i class="fa fa-circle" style="font-size:20px;color:green"> Enough waiters(3)</i>
+<i class="fa fa-circle" style="font-size:20px;color:red"> Too many waiters(4 and above)</i>
 <p class="greeni" style="color: green;">{{messages.clear}}</p>
-<table class="table">
-    <tbody>
-        {{#each scheduleData}}
-        <tr>
-            <td style="background-color: {{#if this}}{{lookup ../coloredCounts @key}}{{/if}}; color: black">{{@key}}</td>
-            <td style="background-color: {{#if this}}{{lookup ../coloredCounts @key}}{{/if}}; color: black">
-                {{#each this}}
-                {{this}}
-                {{/each}}
-            </td>
-        </tr>
-        {{/each}}
-    </tbody>
-</table>
-<form action="/reset" method="POST">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Days</th>
+                        <th>Waiter Names</th>
+                    </tr>
+                    {{#each scheduleData}}
+                    <tr>
+                        <td style="background-color: {{#if this}}{{lookup ../coloredCounts @key}}{{/if}}; color: black">{{@key}}</td>
+                        <td style="background-color: {{#if this}}{{lookup ../coloredCounts @key}}{{/if}}; color: black">
+                            {{#each this}}
+                            {{this}}
+                            {{/each}}
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+             <vr>
+            <form action="/reset" method="POST">
     <button class="btn btn-primary" type="submit">Clear Schedule</button>
 </form>
+        </div>
+       
+        <div class="col-md-3 check">
+            <p>Reschedule waiter</p>
+            <p class="greenier" style="color: green;">{{messages.success}}</p>
+             <p class="reddd" style="color: red;">{{messages.error}}</p>
+            <form action="/reschedule" method="POST">
+    <input type="text" id="name" name="username" placeholder="Enter waiter name">
+    <br>
+    <br>
+    <div class="form-column">
+        {{#each days}}
+        <div class="form-check">
+            <input
+            type="checkbox"
+            class="form-check-input"
+            name="check_days"
+            value="{{this.day_of_the_week}}"
+            {{#if this.checked}} checked {{/if}}
+            />
+            <label class="form-check-label">{{this.day_of_the_week}}</label>
+        </div>
+        {{/each}}
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Reschedule</button>
+</form>
 
+        </div>
+    </div>
+</div>
 <script>
-   setTimeout(function () { document.querySelector('.greeni').innerHTML = ''; },
-  3000);
+    setTimeout(function () { document.querySelector('.greeni').innerHTML = ''; },
+        3000);
+         setTimeout(function () { document.querySelector('.greenier').innerHTML = ''; },
+        3000);
+         setTimeout(function () { document.querySelector('.reddd').innerHTML = ''; },
+        3000);
 </script>
+
  
 
 

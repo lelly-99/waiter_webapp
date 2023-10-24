@@ -5,7 +5,8 @@ CREATE TABLE weekdays (
 
 CREATE TABLE waiters (
     waiter_id SERIAL PRIMARY KEY, 
-    waiter_name VARCHAR(50) NOT NULL
+    waiter_name VARCHAR(50) NOT NULL,
+    waiter_password VARCHAR(60) NOT NULL
 );
 
 CREATE TABLE schedule (
@@ -13,6 +14,7 @@ CREATE TABLE schedule (
     weekdays_id INT REFERENCES weekdays(id),
     waiter_name_id INT REFERENCES waiters(waiter_id)
 );
+
 
 INSERT INTO weekdays (day_of_the_week) VALUES
     ('Monday'),

@@ -1,29 +1,36 @@
 .orange {
   background-color: orange;
-  color: white; /* You can adjust this as needed */
+  color: white;
 }
 
 .yellow {
   background-color: yellow;
-  color: black; /* You can adjust this as needed */
+  color: black;
 }
 
 .green {
   background-color: green;
-  color: white; /* You can adjust this as needed */
+  color: white;
 }
 
 .red {
   background-color: red;
-  color: white; /* You can adjust this as needed */
+  color: white;
 }
 
+.orange {
+  color: orange;
+}
+.yellow {
+  color: yellow;
+}
+.green {
+  color: green;
+}
+.blue {
+  color: red;
+}
+i {
+  padding: 10px;
+}
 
-  
-   
-  
-
-
-
-
-  

@@ -3,9 +3,9 @@
     <p style="color: green;" class="green">{{messages.success}}</p>
     <p style="color: red;" class="red">{{messages.error}}</p>
     <form action="/waiter/{{this.waiter_username}}" method="POST">
-        <div class="form-row">
+        <div class="form-column">
             {{#each days}}
-            <div class="form-check form-check-inline">
+            <div class="form-check">
                 <input
                 type="checkbox"
                 class="form-check-input"

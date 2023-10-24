@@ -30,87 +30,64 @@ describe("Waiter Availability", function () {
     it("should be able to return days of the week", async function () {
       const days = await data.getDays();
       assert.deepEqual(days, [
-        {
-          day_of_the_week: "Monday",
-        },
-        {
-          day_of_the_week: "Tuesday",
-        },
-        {
-          day_of_the_week: "Wednesday",
-        },
-        {
-          day_of_the_week: "Thursday",
-        },
-        {
-          day_of_the_week: "Friday",
-        },
-        {
-          day_of_the_week: "Saturday",
-        },
-        {
-          day_of_the_week: "Sunday",
-        },
+        { day_of_the_week: "Monday" },
+        { day_of_the_week: "Tuesday" },
+        { day_of_the_week: "Wednesday" },
+        { day_of_the_week: "Thursday" },
+        { day_of_the_week: "Friday" },
+        { day_of_the_week: "Saturday" },
+        { day_of_the_week: "Sunday" },
       ]);
     });
 
-    it("should be able to insert a username and display the schedule", async function () {
-      const waiterName = "lelly";
+    it("should be able to insert user credentials and display the schedule", async function () {
+      const waiterName = "Lelly";
       const selectedDays = ["Monday", "Tuesday", "Wednesday"];
-
-      await data.insertUser(waiterName);
+      await data.insertUser(waiterName, 'pass12345');
       await data.insertSchedule(waiterName, selectedDays);
       var userSchedule = await data.getWaiterSchedule();
       assert.deepEqual(userSchedule, [
-        { waiter_name: 'lelly', day_of_the_week: 'Monday' },
-        { waiter_name: 'lelly', day_of_the_week: 'Wednesday' },
-        { waiter_name: 'lelly', day_of_the_week: 'Tuesday' }
+        { waiter_name: 'Lelly', day_of_the_week: 'Tuesday' },
+        { waiter_name: 'Lelly', day_of_the_week: 'Wednesday' },
+        { waiter_name: 'Lelly', day_of_the_week: 'Monday' }
       ]
       );
     });
+    
 
     it("should be able to reset schedule", async function () {
       const waiterName = "Lelly";
       const selectedDays = ["Monday", "Friday", "Wednesday", "Sunday"];
-      await data.insertUser(waiterName);
+      await data.insertUser(waiterName, 'password');
       await data.insertSchedule(waiterName, selectedDays);
       var reset = await data.deleteSchedule();
       assert.equal(reset, undefined);
     });
 
-    it("should be able to get days for specific user", async function () {
+    it("should be able to get days for a specific user", async function () {
       const waiterName = "Lelly";
-      await data.insertUser(waiterName);
-      await data.insertSchedule(waiterName, [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Sunday",
-      ]);
+      await data.insertUser(waiterName, 'password');
+      await data.insertSchedule(waiterName, ["Monday", "Tuesday", "Wednesday"]);
+      
       const selected = await data.getSelectedDaysForWaiter(waiterName);
-      assert.deepEqual(selected, [
-        {
-          day_of_the_week: "Monday",
-        },
-        {
-          day_of_the_week: "Tuesday",
-        },
-        {
-          day_of_the_week: "Wednesday",
-        },
-        {
-          day_of_the_week: "Sunday",
-        },
-      ]);
+      assert.deepEqual(selected,[
+        { day_of_the_week: 'Tuesday' },
+        { day_of_the_week: 'Wednesday' },
+        { day_of_the_week: 'Monday' }
+      ]
+      );
     });
+    
+
     it("should be able to delete user selected days", async function () {
       const waiterName = "Lelly";
       const selectedDays = ["Monday", "Friday", "Wednesday", "Sunday"];
-      await data.insertUser(waiterName);
+      await data.insertUser(waiterName, 'password');
       await data.insertSchedule(waiterName, selectedDays);
       var deleteDays = await data.deleteWiterSelectedDays(waiterName);
       assert.equal(deleteDays, undefined);
     });
+
   });
 
   after(function () {

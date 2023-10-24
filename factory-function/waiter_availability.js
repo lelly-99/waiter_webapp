@@ -2,79 +2,111 @@ export default function waiter_availability() {
   const dayCounts = {};
   const dayColors = {};
   const schedule = {};
+  var error = ""
 
-function checkedDays(waiterSelectedDays, daysofweek) {
-  if (waiterSelectedDays !== undefined) {
-    for (let i = 0; i < daysofweek.length; i++) {
-      const day = daysofweek[i];
-      day.checked = false;
+  function checkedDays(waiterSelectedDays, daysofweek) {
+    if (waiterSelectedDays !== undefined) {
+      for (let i = 0; i < daysofweek.length; i++) {
+        const day = daysofweek[i];
+        day.checked = false;
 
-      for (let j = 0; j < waiterSelectedDays.length; j++) {
-        const waiterDay = waiterSelectedDays[j].day_of_the_week;
-        if (day.day_of_the_week === waiterDay) {
-          day.checked = true;
-          break;
+        for (let j = 0; j < waiterSelectedDays.length; j++) {
+          const waiterDay = waiterSelectedDays[j].day_of_the_week;
+          if (day.day_of_the_week === waiterDay) {
+            day.checked = true;
+            break;
+          }
         }
       }
     }
-  }
-  return daysofweek;
-}
-
-function colorCount(count) {
-  if (count === 1) {
-    return 'orange';
-  } else if (count === 2) {
-    return 'yellow';
-  } else if (count === 3) {
-    return 'green';
-  } else if (count >= 4) {
-    return 'red';
-  }
-}
-
-function checkedDaysCount(data) {
-  data.forEach(item => {
-    const day = item.day_of_the_week;
-    if (!dayCounts[day]) {
-      dayCounts[day] = [item.waiter_name];
-    } else {
-      dayCounts[day].push(item.waiter_name);
-    }
-  });
-
-  for (const day in dayCounts) {
-    dayColors[day] = colorCount(dayCounts[day].length);
+    return daysofweek;
   }
 
-  return dayColors;
-}
-
-function dataInSchedule(days, waiters) {
-  for (let i = 0; i < days.length; i++) {
-    const day = days[i];
-    schedule[day.day_of_the_week] = [];
-  }
-
-  for (let i = 0; i < waiters.length; i++) {
-    const waiter = waiters[i];
-    if (schedule[waiter.day_of_the_week]) {
-      schedule[waiter.day_of_the_week].push(waiter.waiter_name);
+  
+  function colorCount(count) {
+    if (count === 1) {
+      return "orange";
+    } else if (count === 2) {
+      return "yellow";
+    } else if (count === 3) {
+      return "green";
+    } else if (count >= 4) {
+      return "red";
     }
   }
-  for (let i = 0; i < days.length; i++) {
-    const day = days[i];
-    if (!schedule[day.day_of_the_week]) {
+  
+  function checkedDaysCount(data) {
+    const dayCounts = {};
+    const dayColors = {};
+  
+    for (let i = 0; i < data.length; i++) {
+      const item = data[i];
+      const day = item.day_of_the_week;
+      const waiterName = item.waiter_name;
+  
+      if (!dayCounts[day]) {
+        dayCounts[day] = [waiterName];
+      } else {
+        dayCounts[day].push(waiterName);
+      }
+    }
+  
+    for (const day in dayCounts) {
+      dayColors[day] = colorCount(dayCounts[day].length);
+    }
+  
+    return dayColors;
+  }
+  
+
+
+  function dataInSchedule(days, waiters) {
+    for (let i = 0; i < days.length; i++) {
+      const day = days[i];
       schedule[day.day_of_the_week] = [];
     }
+
+    for (let i = 0; i < waiters.length; i++) {
+      const waiter = waiters[i];
+      if (schedule[waiter.day_of_the_week]) {
+        schedule[waiter.day_of_the_week].push(waiter.waiter_name);
+      }
+    }
+    for (let i = 0; i < days.length; i++) {
+      const day = days[i];
+      if (!schedule[day.day_of_the_week]) {
+        schedule[day.day_of_the_week] = [];
+      }
+    }
+    return schedule;
   }
-  return schedule;
-}
+
+  function validateSignUp(waiter, password, repeatPassword) {
+    var name = waiter.charAt(0).toUpperCase() + waiter.slice(1).toLowerCase()
+     if (!password){
+      error = "Please enter password"
+    }else if(password !== repeatPassword) {
+      error = "Password does not match";
+    }else if(!/^[a-zA-Z]+$/.test(name)){
+      error = "Name must contain only letters"
+    } else if (password <= 8){
+      error = "Password should contain characters 8 r more characters"
+    }
+    return error;
+  }
 
   return {
     dataInSchedule,
     checkedDays,
     checkedDaysCount,
     colorCount,
-  }
+    validateSignUp
+  };
 }
+
+
+
+
+
+
+

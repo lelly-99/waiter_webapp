@@ -5,9 +5,11 @@ import flash from "connect-flash";
 import session from "express-session";
 import pgPromise from "pg-promise";
 import query from "./service/query.js";
-import routes from "./routes/route.js";
+import sign_up from "./routes/sign_up.js"
+import login from "./routes/login.js";
+import waiters from "./routes/waiters.js";
+import days from "./routes/days.js";
 import waiter_availability from "./factory-function/waiter_availability.js";
-
 
 
 const pgp = pgPromise();
@@ -25,8 +27,12 @@ const database = pgp(connectionString);
 const database_instance = query(database);
 //ff
 const waiter_instance = waiter_availability()
-//route instance
-const route = routes(database_instance, waiter_instance);
+
+//route instances
+const sign = sign_up(database_instance, waiter_instance);
+const log = login(database_instance);
+const waiter = waiters(database_instance, waiter_instance);
+const day = days(database_instance, waiter_instance)
 //ff instance
 
 const app = express();
@@ -52,12 +58,16 @@ app.use(function (req, res, next) {
 });
 
 //routes
-app.get('/', route.get_login);
-app.post('/post_login', route.post_login);
-app.get('/waiter/:username', route.get_waiter);
-app.post('/waiter/:username', route.post_waiter);
-app.get('/days', route.get_days);
-app.post('/reset', route.reset_schedule);
+app.get('/', sign.get_sign_up);
+app.post('/sign_in', sign.post_sign_up);
+app.get('/login', log.get_login);
+app.post('/login', log.post_login);
+app.get('/waiter/:username', waiter.get_waiter);
+app.post('/waiter/:username', waiter.post_waiter);
+app.get('/days', day.get_days);
+app.post('/reset', day.reset_schedule);
+app.get('/reschedule', day.get_reschedule_waiter);
+app.post('/reschedule', day.post_reschedule_waiter);
 
 // Start the server
 const PORT = process.env.PORT || 3007;

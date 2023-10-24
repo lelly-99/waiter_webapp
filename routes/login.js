@@ -14,19 +14,21 @@ export default function login(database_instance) {
       const name = req.body.name;
       const password = req.body.password;
       const user = await database_instance.getUser(name);
-      console.log(user)
       const passwordMatch = await bcrypt.compare(
         password,
         user.waiter_password
       );
-      console.log(passwordMatch)
-      if (passwordMatch) {
+      if (name && passwordMatch) {
         res.redirect("/waiter/" + name);
-      } 
+      } else if(!passwordMatch){
+        req.flash("error", "Incorrect credentials");
+      }else if (!name || name === ''){
+        req.flash("error", "Please enter your name");
+      }else if(name || name !== "" && !password){
+        req.flash("error", "Please enter your password");
+      }
     } catch (err) {
       console.error("Error during login:", err);
-      req.flash("error", "An error occurred during login. Please try again.");
-      res.redirect("/login");
     }
   }
 

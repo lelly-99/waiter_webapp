@@ -81,14 +81,17 @@ export default function waiter_availability() {
 
   function validateSignUp(waiter, password, repeatPassword) {
     var name = waiter.charAt(0).toUpperCase() + waiter.slice(1).toLowerCase()
-     if (!password){
+     if (!password && name){
       error = "Please enter password"
-    }else if(password !== repeatPassword) {
-      error = "Password does not match";
-    }else if(!/^[a-zA-Z]+$/.test(name)){
-      error = "Name must contain only letters"
-    } else if (password <= 8){
+    // }else if(password !== repeatPassword) {
+    //   error = "Password does not match";
+    // 
+  }else if(!/^[a-zA-Z]+$/.test(name) && password){
+      error = "Please enter a valid name"
+    } else if (password <= 8 && /^[a-zA-Z]+$/.test(name)){
       error = "Password should contain characters 8 r more characters"
+    } else if(!/^[a-zA-Z]+$/.test(name) && !password && !repeatPassword){
+      error = "Please enter your cretentials to register"
     }
     return error;
   }

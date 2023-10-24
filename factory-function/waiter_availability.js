@@ -1,6 +1,4 @@
 export default function waiter_availability() {
-  const dayCounts = {};
-  const dayColors = {};
   const schedule = {};
   var error = ""
 

@@ -22,6 +22,9 @@ export default function sign_up(database_instance, waiter_instance) {
       if (error) {
         req.flash("error", error);
         res.redirect("/");
+      }else if(password !== repeatPassword){
+        req.flash("error", "Password does not match.");
+        res.redirect("/");
       }else if (userExists) {
         req.flash("error", "User already exists. Please login.");
         res.redirect("/login");

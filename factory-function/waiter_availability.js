@@ -83,9 +83,6 @@ export default function waiter_availability() {
     var name = waiter.charAt(0).toUpperCase() + waiter.slice(1).toLowerCase()
      if (!password && name){
       error = "Please enter password"
-    // }else if(password !== repeatPassword) {
-    //   error = "Password does not match";
-    // 
   }else if(!/^[a-zA-Z]+$/.test(name) && password){
       error = "Please enter a valid name"
     } else if (password <= 8 && /^[a-zA-Z]+$/.test(name)){

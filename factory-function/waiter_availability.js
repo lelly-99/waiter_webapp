@@ -1,6 +1,6 @@
 export default function waiter_availability() {
   const schedule = {};
-  var error = null;
+  
 
   function checkedDays(waiterSelectedDays, daysofweek) {
     if (waiterSelectedDays !== undefined) {
@@ -80,11 +80,12 @@ export default function waiter_availability() {
   }
 
   function validateSignUp(name, password, repeatPassword) {
+    let error = "";
     if (!password && name) {
       error = "Please enter a password";
     } else if (!/^[a-zA-Z]+$/.test(name) && password) {
       error = "Please enter a valid name";
-    } else if (password.length < 8) {
+    } else if (password.length < 8 ) {
       error = "Password should contain at least 8 characters";
     }  else if (!/^[a-zA-Z]+$/.test(name) && !password && !repeatPassword) {
       error = "Please enter your credentials to register";

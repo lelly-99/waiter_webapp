@@ -80,17 +80,19 @@ export default function waiter_availability() {
   }
 
   function validateSignUp(name, password, repeatPassword) {
-     if (!password && name){
-      error = "Please enter password"
-  }else if(!/^[a-zA-Z]+$/.test(name) && password){
-      error = "Please enter a valid name"
-    } else if (!/^.{8,}$/.test(password)){
-      error = "Password should contain characters 8 more characters"
-    } else if(!/^[a-zA-Z]+$/.test(name) && !password && !repeatPassword){
-      error = "Please enter your cretentials to register"
+    if (!password && name) {
+      error = "Please enter a password";
+    } else if (!/^[a-zA-Z]+$/.test(name) && password) {
+      error = "Please enter a valid name";
+    } else if (password.length < 8) {
+      error = "Password should contain at least 8 characters";
+    }  else if (!/^[a-zA-Z]+$/.test(name) && !password && !repeatPassword) {
+      error = "Please enter your credentials to register";
     }
+  
     return error;
   }
+  
 
   return {
     dataInSchedule,

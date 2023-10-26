@@ -47,8 +47,6 @@ export default function login(database_instance) {
     }
   }
   
-  
-
   return {
     get_login,
     post_login,

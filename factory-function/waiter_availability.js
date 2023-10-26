@@ -92,7 +92,6 @@ export default function waiter_availability() {
     return error;
   }
   
-
   return {
     dataInSchedule,
     checkedDays,

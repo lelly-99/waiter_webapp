@@ -34,18 +34,16 @@ export default function days(database_instance, waiter_instance) {
       console.log("error", err);
     }
   }
-
   async function post_reschedule_waiter(req, res) {
     try {
       const selectedDays = req.body.check_days;
       const username = req.body.username;
-      const waiterInSchedule = await database_instance.getSelectedDaysForWaiter(
-        username
-      );
-      if (waiterInSchedule.length === 0) {
-        req.flash("error", "Waiter not on schedule");
-      }else if (!username || username === '') {
-        req.flash("error", "Please enter waiter name");
+      const waiterInSchedule = await database_instance.getSelectedDaysForWaiter(username);
+  
+      if (!username && !selectedDays) {
+        req.flash("error", "Please enter waiter name and select days");
+      } else if (waiterInSchedule.length === 0 && selectedDays) {
+        req.flash("error", "Please enter name of waiter on schedule");
       } else if (!selectedDays) {
         req.flash("error", "Please select days");
       } else {
@@ -53,11 +51,13 @@ export default function days(database_instance, waiter_instance) {
         await database_instance.insertSchedule(username, selectedDays);
         req.flash("success", "Waiter schedule has been updated.");
       }
+  
       res.redirect("/days");
     } catch (err) {
       console.error("Error:", err);
     }
   }
+  
   
   return {
     get_days,

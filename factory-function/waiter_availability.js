@@ -84,8 +84,8 @@ export default function waiter_availability() {
       error = "Please enter password"
   }else if(!/^[a-zA-Z]+$/.test(name) && password){
       error = "Please enter a valid name"
-    } else if (password <= 8 && /^[a-zA-Z]+$/.test(name)){
-      error = "Password should contain characters 8 r more characters"
+    } else if (password >= 8 && /^[a-zA-Z]+$/.test(name)){
+      error = "Password should contain characters 8 or more characters"
     } else if(!/^[a-zA-Z]+$/.test(name) && !password && !repeatPassword){
       error = "Please enter your cretentials to register"
     }

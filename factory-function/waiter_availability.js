@@ -79,8 +79,7 @@ export default function waiter_availability() {
     return schedule;
   }
 
-  function validateSignUp(waiter, password, repeatPassword) {
-    var name = waiter.charAt(0).toUpperCase() + waiter.slice(1).toLowerCase()
+  function validateSignUp(name, password, repeatPassword) {
      if (!password && name){
       error = "Please enter password"
   }else if(!/^[a-zA-Z]+$/.test(name) && password){
@@ -98,7 +97,7 @@ export default function waiter_availability() {
     checkedDays,
     checkedDaysCount,
     colorCount,
-    validateSignUp
+    validateSignUp,
   };
 }
 

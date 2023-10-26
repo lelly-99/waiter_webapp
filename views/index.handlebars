@@ -1,4 +1,4 @@
-{{!-- <style>
+<style>
   p, h3 { 
     text-align: center;
    } 
@@ -22,9 +22,6 @@
         width: 250px;
       }
      }
-
-
-
 </style>
 <div class="container">
   <form action="/sign_in" method="POST"> 
@@ -49,123 +46,4 @@
   3000);
    setTimeout(function () { document.querySelector('.greens').innerHTML = ''; },
   3000);
-</script>  --}}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<style>
-  p, h3 { 
-    text-align: center;
-  } 
-  button { width: 300px; }
-  input {
-    border-radius: 2px;
-    width: 300px;
-    height: 40px;
-    margin: 5px 0 22px 0;
-    border: none;
-    background: #f1f1f1;
-    color: black;
-    padding-left: 10px;
-  }
-
-  .password-container {
-    position: relative;
-  }
-
-  .toggle-password {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    cursor: pointer;
-  }
-
-  @media (max-width: 69em) {
-    input {
-      width: 250px;
-      height: 35px;
-    }
-    button {
-      width: 250px;
-    }
-  }
-</style>
-</head>
-<body>
-<div class="container">
-  <form action="/sign_in" method="POST"> 
-    <h3>Register</h3>
-    <div style="color: green;" class="greens">{{messages.success}}</div>
-    <div style="color: red;" class="reds">{{messages.error}}</div>
-    <hr>
-    <label for="name"><b>Username</b></label><br>
-    <input type="text" id="name" name="name" placeholder="Enter your name"><br><br>
-    <div class="password-container">
-      <label for="password"><b>Password</b></label><br>
-      <div class="input-group">
-        <input type="password" id="password" name="password" placeholder="Enter password">
-        <span class="toggle-password" id="togglePassword">
-          <i class="fas fa-eye-slash" style="color: grey; margin-bottom: 13px"></i>
-        </span>
-      </div>
-    </div><br><br>
-    <div class="password-container">
-      <label for="password_repeat"><b>Repeat password</b></label><br>
-      <div class="input-group">
-        <input type="password" id="password_repeat" name="password_repeat" placeholder="Re-enter password">
-        <span class="toggle-password" id="togglePasswordRepeat">
-          <i class="fas fa-eye-slash" style="color: grey; margin-bottom: 13px"></i>
-        </span>
-      </div>
-    </div><br><br>
-    <button type="submit" class="btn btn-primary">Sign Up</button>
-    <div class="container signin">
-      <p>Already have an account? <a href="/login">Login</a>.</p>
-    </div>
-  </form>
-</div>
-
-<script>
-  setTimeout(function () { document.querySelector('.reds').innerHTML = ''; }, 3000);
-  setTimeout(function () { document.querySelector('.greens').innerHTML = ''; }, 3000);
-
-  const togglePassword = document.getElementById('togglePassword');
-  const togglePasswordRepeat = document.getElementById('togglePasswordRepeat');
-  const passwordInput = document.getElementById('password');
-  const passwordInputRepeat = document.getElementById('password_repeat');
-
-  togglePassword.addEventListener('click', function () {
-    if (passwordInput.type === 'password') {
-      passwordInput.type = 'text';
-      togglePassword.querySelector('i').classList.remove('fa-eye-slash');
-      togglePassword.querySelector('i').classList.add('fa-eye');
-    } else {
-      passwordInput.type = 'password';
-      togglePassword.querySelector('i').classList.remove('fa-eye');
-      togglePassword.querySelector('i').classList.add('fa-eye-slash');
-    }
-  });
-
-  togglePasswordRepeat.addEventListener('click', function () {
-    if (passwordInputRepeat.type === 'password') {
-      passwordInputRepeat.type = 'text';
-      togglePasswordRepeat.querySelector('i').classList.remove('fa-eye-slash');
-      togglePasswordRepeat.querySelector('i').classList.add('fa-eye');
-    } else {
-      passwordInputRepeat.type = 'password';
-      togglePasswordRepeat.querySelector('i').classList.remove('fa-eye');
-      togglePasswordRepeat.querySelector('i').classList.add('fa-eye-slash');
-    }
-  });
-</script>
-</body>
-</html>
-
-
-
-
-
-
-
+</script> 

@@ -44,7 +44,7 @@ export default function days(database_instance, waiter_instance) {
       );
       if (waiterInSchedule.length === 0) {
         req.flash("error", "Waiter not on schedule");
-      }else if (!username) {
+      }else if (!username || username === '') {
         req.flash("error", "Please enter waiter name");
       } else if (!selectedDays) {
         req.flash("error", "Please select days");

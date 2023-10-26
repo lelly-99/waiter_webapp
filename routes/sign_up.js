@@ -12,7 +12,8 @@ export default function sign_up(database_instance, waiter_instance) {
   async function post_sign_up(req, res) {
   
     try {
-      const name = req.body.name;
+      const waiter = req.body.name;
+      const name = waiter.charAt(0).toUpperCase() + waiter.slice(1).toLowerCase()
       const password = req.body.password;
       const repeatPassword = req.body.password_repeat;
       const saltRounds = 10;

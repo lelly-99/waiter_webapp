@@ -45,16 +45,20 @@ describe("Waiter Availability", function () {
       const selectedDays = ["Monday", "Tuesday", "Wednesday"];
       await data.insertUser(waiterName, 'pass12345');
       await data.insertSchedule(waiterName, selectedDays);
-      var userSchedule = await data.getWaiterSchedule();
-      assert.deepEqual(userSchedule, [
+      const days = await data.getWaiterSchedule();
+      days.sort((a, b) => (a.day_of_the_week > b.day_of_the_week ? 1 : -1));
+    
+      const waiterDays = [
         { waiter_name: 'Lelly', day_of_the_week: 'Monday' },
         { waiter_name: 'Lelly', day_of_the_week: 'Tuesday' },
         { waiter_name: 'Lelly', day_of_the_week: 'Wednesday' }
-      ]
-      );
+      ];
+  
+      waiterDays.sort((a, b) => (a.day_of_the_week > b.day_of_the_week ? 1 : -1));
+    
+      assert.deepStrictEqual(days, waiterDays);
     });
     
-
     it("should be able to reset schedule", async function () {
       const waiterName = "Lelly";
       const selectedDays = ["Monday", "Friday", "Wednesday", "Sunday"];
@@ -68,17 +72,20 @@ describe("Waiter Availability", function () {
       const waiterName = "Lelly";
       await data.insertUser(waiterName, 'password');
       await data.insertSchedule(waiterName, ["Monday", "Tuesday", "Wednesday"]);
-      
-      const selected = await data.getSelectedDaysForWaiter(waiterName);
-      assert.deepEqual(selected,[
+    
+      const selectedDays = await data.getSelectedDaysForWaiter(waiterName);
+      selectedDays.sort((a, b) => (a.day_of_the_week > b.day_of_the_week ? 1 : -1));
+    
+      const days = [
         { day_of_the_week: 'Monday' },
         { day_of_the_week: 'Tuesday' },
         { day_of_the_week: 'Wednesday' }
-      ]
-      );
+      ];
+      days.sort((a, b) => (a.day_of_the_week > b.day_of_the_week ? 1 : -1));
+    
+      assert.deepStrictEqual(days, selectedDays);
     });
     
-
     it("should be able to delete user selected days", async function () {
       const waiterName = "Lelly";
       const selectedDays = ["Monday", "Friday", "Wednesday", "Sunday"];

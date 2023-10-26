@@ -9,46 +9,41 @@ export default function login(database_instance) {
     }
   }
 
-  // async function post_login(req, res) {
-  //   try {
-  //     const name = req.body.name;
-  //     const password = req.body.password;
-  //     const user = await database_instance.getUser(name);
-  //     const passwordMatch = await bcrypt.compare(
-  //       password,
-  //       user.waiter_password
-  //     );
-  //     if (name && passwordMatch) {
-  //       res.redirect("/waiter/" + name);
-  //     } else if(!passwordMatch){
-  //       req.flash("error", "Incorrect credentials");
-  //     }else if (!name || name === ''){
-  //       req.flash("error", "Please enter your name");
-  //     }else if(name || name !== "" && !password){
-  //       req.flash("error", "Please enter your password");
-  //     }
-  //   } catch (err) {
-  //     console.error("Error during login:", err);
-  //   }
-  // }
   async function post_login(req, res) {
     try {
-      const name = req.body.name;
+      const waiter = req.body.name;
+      const name = waiter.charAt(0).toUpperCase() + waiter.slice(1).toLowerCase()
       const password = req.body.password;
       const user = await database_instance.getUser(name);
       const passwordMatch = await bcrypt.compare(password, user.waiter_password);
   
-      if (!passwordMatch) {
-        req.flash("error", "Incorrect credentials");
-      } else if (!name || name === '') {
+      if (!name || name === '') {
         req.flash("error", "Please enter your name");
-      } else if (!password) {
-        req.flash("error", "Please enter your password");
-      } else {
-        res.redirect("/waiter/" + name);
+        res.redirect("/login"); 
+        return; 
       }
+  
+      if (!user) {
+        req.flash("error", "User does not exist");
+        res.redirect("/login"); 
+        return; 
+      }
+
+      if (!password || password === '') {
+        req.flash("error", "Please enter your password");
+        res.redirect("/login");
+        return; 
+      }
+  
+      if (!passwordMatch) {
+        req.flash("error", "Incorrect password");
+        res.redirect("/login");
+        return; 
+      }
+      res.redirect("/waiter/" + name);
     } catch (err) {
       console.error("Error during login:", err);
+      res.redirect("/login"); 
     }
   }
   

@@ -69,12 +69,11 @@ const query = (db) => {
 
   const getUser = async (waiter_name) => {
     return await db.oneOrNone(
-      "SELECT * FROM waiters WHERE waiter_name = $1",
+      "SELECT * FROM waiters WHERE waiter_name = $1 LIMIT 1",
       [waiter_name]
     );
   };
   
-
   return {
     getDays,
     insertUser,

@@ -55,8 +55,6 @@ export default function waiter_availability() {
     return dayColors;
   }
   
-
-
   function dataInSchedule(days, waiters) {
     for (let i = 0; i < days.length; i++) {
       const day = days[i];

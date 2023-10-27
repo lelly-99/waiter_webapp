@@ -57,10 +57,11 @@ app.use(function (req, res, next) {
     next();
 });
 const authenticate = (req, res, next) => {
-    if (req.session.user) {
+    const referer = req.get('referer');
+    if (referer && referer.endsWith('/login')) {
         next();
     } else {
-        req.flash("error", "Access denied. Please log in.");
+        req.flash("error", "Access denied. Please login to proceed.");
         res.redirect('/login');
     }
 };

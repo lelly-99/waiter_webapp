@@ -56,14 +56,22 @@ app.use(function (req, res, next) {
     res.locals.messages = req.flash();
     next();
 });
+const authenticate = (req, res, next) => {
+    if (req.session.user) {
+        next();
+    } else {
+        req.flash("error", "Access denied. Please log in.");
+        res.redirect('/login');
+    }
+};
 
 //routes
 app.get('/', sign.get_sign_up);
 app.post('/sign_in', sign.post_sign_up);
 app.get('/login', log.get_login);
 app.post('/login', log.post_login);
-app.get('/waiter/:username', waiter.get_waiter);
-app.post('/waiter/:username', waiter.post_waiter);
+app.get('/waiter/:username', authenticate, waiter.get_waiter);
+app.post('/waiter/:username', authenticate, waiter.post_waiter);
 app.get('/days', day.get_days);
 app.post('/reset', day.reset_schedule);
 app.get('/reschedule', day.get_reschedule_waiter);

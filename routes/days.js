@@ -58,7 +58,6 @@ export default function days(database_instance, waiter_instance) {
     }
   }
   
-  
   return {
     get_days,
     reset_schedule,

@@ -10,6 +10,7 @@ export default function waiters(database_instance, waiter_instance) {
         if (loggedInUsername !== username) {
           req.flash("error", "Access denied. Please log in to proceed.");
           res.redirect('/login');
+          return
         }
         waiter_instance.checkedDays(selectedDays, days);
         res.render("waiter", { days, waiter_username: username });

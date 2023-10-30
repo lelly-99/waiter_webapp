@@ -77,15 +77,7 @@ app.get('/days', day.get_days);
 app.post('/reset', day.reset_schedule);
 app.get('/reschedule', day.get_reschedule_waiter);
 app.post('/reschedule', day.post_reschedule_waiter);
-// Logout route
-app.post('/logout', (req, res) => {
-    req.session.destroy((err) => {
-      if (err) {
-        console.error("Error during logout:", err);
-      }
-      res.redirect('/login');
-    });
-  });
+app.post('/logout', waiter.logout);
   
 // Start the server
 const PORT = process.env.PORT || 3007;

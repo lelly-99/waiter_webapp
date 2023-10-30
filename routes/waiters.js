@@ -3,10 +3,14 @@ export default function waiters(database_instance, waiter_instance) {
       try {
         const days = await database_instance.getDays();
         const username = req.params.username;
+        const loggedInUsername = req.session.user;
         const selectedDays = await database_instance.getSelectedDaysForWaiter(
           username
         );
-        console.log(selectedDays)
+        if (loggedInUsername !== username) {
+          req.flash("error", "Access denied. Please log in to proceed.");
+          res.redirect('/login');
+        }
         waiter_instance.checkedDays(selectedDays, days);
         res.render("waiter", { days, waiter_username: username });
       } catch (err) {
@@ -34,8 +38,23 @@ export default function waiters(database_instance, waiter_instance) {
         console.error("Error:", err);
       }
     }
+
+    async function logout(req, res) {
+      try {
+        req.session.destroy((err) => {
+          if (err) {
+            console.error("Error during logout:", err);
+          }
+          res.redirect('/login');
+        });
+      } catch (err) {
+        console.log("error", err);
+      }
+    }
+    
     return {
       get_waiter,
       post_waiter,
+      logout
     };
   }

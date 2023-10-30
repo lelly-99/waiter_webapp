@@ -1,3 +1,10 @@
+<style>
+    .container form {
+    display: inline-block;
+    margin-right: 20px; 
+}
+
+</style>
 <div class="container">
     <p>You are logged in as <span>{{this.waiter_username}}</span>, please select your availability</p>
     <p style="color: green;" class="green">{{messages.success}}</p>
@@ -20,12 +27,23 @@
         <br>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+    <form action="/logout" method="POST">
+    <button type="submit" class="btn btn-primary" onclick="return confirmLogout()">Logout</button>
+</form>
+
 </div>
 <script>
   setTimeout(function () { document.querySelector('.red').innerHTML = ''; },
   3000);
    setTimeout(function () { document.querySelector('.green').innerHTML = ''; },
   3000);
+ const confirmLogout = () => {
+    const confirmed = confirm("Are you sure you want to log out?");
+    if (confirmed) {
+      return true;
+    }
+    return false;
+  };
 </script> 
 
 

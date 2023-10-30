@@ -33,7 +33,6 @@ const sign = sign_up(database_instance, waiter_instance);
 const log = login(database_instance);
 const waiter = waiters(database_instance, waiter_instance);
 const day = days(database_instance, waiter_instance)
-//ff instance
 
 const app = express();
 
@@ -56,14 +55,15 @@ app.use(function (req, res, next) {
     res.locals.messages = req.flash();
     next();
 });
+
+//url login confirmation
 const authenticate = (req, res, next) => {
-    const referer = req.get('referer');
-    if (referer && referer.endsWith('/login')) {
+    if (req.session.user) {
         next();
-    } else {
-        req.flash("error", "Access denied. Please login to proceed.");
+      } else {
+        req.flash("error", "Please login to access the URL");
         res.redirect('/login');
-    }
+      }
 };
 
 //routes
@@ -71,13 +71,22 @@ app.get('/', sign.get_sign_up);
 app.post('/sign_in', sign.post_sign_up);
 app.get('/login', log.get_login);
 app.post('/login', log.post_login);
-app.get('/waiter/:username', authenticate, waiter.get_waiter);
-app.post('/waiter/:username', authenticate, waiter.post_waiter);
+app.get('/waiter/:username',authenticate, waiter.get_waiter);
+app.post('/waiter/:username',authenticate, waiter.post_waiter);
 app.get('/days', day.get_days);
 app.post('/reset', day.reset_schedule);
 app.get('/reschedule', day.get_reschedule_waiter);
 app.post('/reschedule', day.post_reschedule_waiter);
-
+// Logout route
+app.post('/logout', (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        console.error("Error during logout:", err);
+      }
+      res.redirect('/login');
+    });
+  });
+  
 // Start the server
 const PORT = process.env.PORT || 3007;
 app.listen(PORT, function () {

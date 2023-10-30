@@ -40,7 +40,9 @@ export default function login(database_instance) {
         res.redirect("/login");
         return; 
       }
-      res.redirect("/waiter/" + name);
+    
+        req.session.user = name
+        res.redirect("/waiter/" + name);
     } catch (err) {
       console.error("Error during login:", err);
       res.redirect("/login"); 

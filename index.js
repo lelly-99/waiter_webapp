@@ -3,6 +3,7 @@ import { engine } from "express-handlebars";
 import bodyParser from "body-parser";
 import flash from "connect-flash";
 import session from "express-session";
+import dotenv from "dotenv";
 import pgPromise from "pg-promise";
 import query from "./service/query.js";
 import sign_up from "./routes/sign_up.js"
@@ -11,6 +12,8 @@ import waiters from "./routes/waiters.js";
 import days from "./routes/days.js";
 import waiter_availability from "./factory-function/waiter_availability.js";
 
+
+dotenv.config();
 
 const pgp = pgPromise();
 
@@ -22,7 +25,7 @@ if (process.env.DATABASE_URL && !local) {
 }
 
 // Database connection
-const connectionString = process.env.DATABASE_URL || "postgres://otzyymfe:0lGTbqnyGfXApYOVD2IceTfouyXP0oxi@silly.db.elephantsql.com/otzyymfe?ssl=true";
+const connectionString = process.env.DATABASE_URL;
 const database = pgp(connectionString);
 const database_instance = query(database);
 //ff
@@ -80,7 +83,7 @@ app.post('/reschedule', day.post_reschedule_waiter);
 app.post('/logout', waiter.logout);
   
 // Start the server
-const PORT = process.env.PORT || 3007;
+const PORT = process.env.PORT;
 app.listen(PORT, function () {
     console.log("App started at port:", PORT);
 });
